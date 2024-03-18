@@ -73,16 +73,22 @@
         {{-- send message --}}
         <footer class="shrink-0 z-10 bg-white inset-x-0 bottom-0">
             <div class="p-2 border-t">
-                <form action="" method="POST" autocapitalize="offf">
+                <form
+                x-data="{body:@entangle('body').defer}"
+                @submit.prevent="$wire.sendMessage"
+                action="" method="POST" autocapitalize="off">
                     @csrf
 
                     <input type="hidden" name="" id="">
                     <div class="grid grid-cols-12">
-                        <input type="text" name="" id=""
-                        autocomplete="off" autofocus placeholder="Nhập nội dung ..."
-                        maxlength="1700"
-                        class="col-span-10 bg-gray-100 border-0 outline-0 focus:border-0 focus:ring-0 rounded-lg focus:outline-none">
-                        <button type="submit" class="col-span-2">Gửi</button>
+                        <input
+                            x-model="body"
+                            type="text" name="" id=""
+                            autocomplete="off" autofocus placeholder="Nhập nội dung ..."
+                            maxlength="1700"
+                            class="col-span-10 bg-gray-100 border-0 outline-0 focus:border-0 focus:ring-0 rounded-lg focus:outline-none"
+                        >
+                        <button x-bind:disabled="body.trim()" type="submit" class="col-span-2">Gửi</button>
                     </div>
                 </form>
             </div>
