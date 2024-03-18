@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table -> unsignedBigInteger('sender-id'); // có thể dùng uuid()
-            $table -> foreign('sender-id') -> references('id') -> on('users');
-            $table -> unsignedBigInteger('receiver-id');
-            $table -> foreign('receiver-id') -> references('id') -> on('users');
+            $table -> unsignedBigInteger('sender_id'); // có thể dùng uuid()
+            $table -> foreign('sender_id') -> references('id') -> on('users');
+            $table -> unsignedBigInteger('receiver_id');
+            $table -> foreign('receiver_id') -> references('id') -> on('users');
 
             $table -> softDeletes();
             $table->timestamps();
