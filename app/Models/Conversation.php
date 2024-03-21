@@ -29,4 +29,7 @@ class Conversation extends Model
     public function unreadMessagesCount(){
 
     }
+    public function isLastMessageReadByUser(){
+
+    }
 }
