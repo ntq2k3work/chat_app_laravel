@@ -33,6 +33,13 @@ class ChatBox extends Component
 
         // Hiển thị tin ngay lập tức
         $this -> loadedMessages -> push($createdMessage);
+
+        #update conversation model
+        $this -> selectedConversation -> updated_at = now();
+        $this -> selectedConversation -> save();
+
+        // tự động cập nhật chatlist
+        $this -> dispatch('chat.chat-list','refresh');
     }
     public function mount(){
         $this -> loadedMessages();
