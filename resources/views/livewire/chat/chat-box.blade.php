@@ -1,4 +1,13 @@
-<div class="w-full overflow-hidden">
+<div class="w-full overflow-hidden"
+    x-data = "{height:0,conversationElement:document.getElementById('conversation')}"
+    x-init="
+            height = conversationElement.scrollHeight;
+            $nextTick(() => conversationElement.scrollTop = height);
+        "
+    @scroll-bottom.window = "
+    $nextTick(() => conversationElement.scrollTop = height);
+    "
+>
 
     <div class="border-b flex flex-col overflow-y-scroll grow h-full">
 
@@ -122,7 +131,7 @@
                         ]) >
 
 
-                    {{$message->created_at->format('g:i a')}}
+                    {{$message->created_at->format('H:i a')}}
 
                 </p>
 
@@ -133,7 +142,7 @@
 
                     <div x-data="{markAsRead:@json($message->isRead())}">
 
-                        {{-- double ticks --}}
+                        {{-- Đã xem --}}
 
                         <span x-cloak x-show="markAsRead" @class('text-gray-200')>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-all" viewBox="0 0 16 16">
@@ -142,7 +151,7 @@
                             </svg>
                         </span>
 
-                        {{-- single ticks --}}
+                        {{-- Đã gửi--}}
                         <span x-show="!markAsRead" @class('text-gray-200')>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
                                 <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
@@ -181,8 +190,9 @@
         <div class=" p-2 border-t">
 
             <form
-             x-data="{ body:@entangle('body').defer}"
+             x-data="{ body:@entangle('body')}"
              @submit.prevent="$wire.sendMessage"
+            id="form_sendMessage"
              method="POST" autocapitalize="off">
                 @csrf
 
@@ -190,14 +200,12 @@
 
                 <div class="grid grid-cols-12">
                      <input
-                            wire:model="body"
+                            {{-- wire:model.live='body' --}}
                             x-model='body'
-                            type="text"
                             autocomplete="off"
                             autofocus
                             placeholder="Nhập nội dung"
                             maxlength="1700"
-                            name="body"
                             class="col-span-10 bg-gray-100 border-0 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg  focus:outline-none"
                      >
                      <button x-bind:disabled="!body.trim()"  class="col-span-2" type='submit'>Gửi</button>
@@ -222,3 +230,6 @@
 </div>
 
 </div>
+<script>
+
+</script>

@@ -27,6 +27,12 @@ class ChatBox extends Component
             'body' => $this -> body,
         ]);
         $this -> reset('body');
+
+        // Cuộn xuống cuối khi gửi tin
+        $this -> dispatch('scroll-bottom');
+
+        // Hiển thị tin ngay lập tức
+        $this -> loadedMessages -> push($createdMessage);
     }
     public function mount(){
         $this -> loadedMessages();
